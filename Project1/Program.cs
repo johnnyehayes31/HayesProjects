@@ -28,43 +28,55 @@ namespace LAB1
 
                 string Choice = Console.ReadLine();
 
-                switch (Choice)
-                {
-                    case "1":
-                        AddGradeMenu();
-                        break;
+                if (Choice == "1" || Choice == "2" || Choice == "3" || Choice == "4" || Choice == "5" || Choice == "6" || Choice == "7" || Choice == "8")
+                { 
 
-                    case "2":
-                        ShowGrade();
-                        break;
+                
+                    switch (Choice)
+                    {
+                        case "1":
+                            AddGradeMenu();
+                            break;
 
-                    case "3":
-                        ModifyGrade();
-                        break;
+                        case "2":
+                            ShowGrade();
+                            break;
 
-                    case "4":
-                        RemoveGrade();
-                        break;
+                        case "3":
+                            ModifyGrade();
+                            break;
 
-                    case "5":
-                        ShowAverageGrade();
-                        break;
+                        case "4":
+                            RemoveGrade();
+                            break;
 
-                    case "6":
-                        BestGrade();
-                        break;
+                        case "5":
+                            ShowAverageGrade();
+                            break;
 
-                    case "7":
-                        ShowWorstGrade();
-                        break;
+                        case "6":
+                            BestGrade();
+                            break;
 
-                    case "8":
-                        //
-                        break;
+                        case "7":
+                            //ShowWorstGrade();
+                            break;
 
-                    default:          
-                        break;
+                        case "8":
+                            //
+                            break;
+
+                        default:
+                            break;
+                    }
+                    
                 }
+                else
+                {
+                    Menu();
+                }
+
+
                 void AddGradeMenu()
                 {
                     Console.Clear(); // Will clear the menu doesn't repeatedly show in console window
@@ -73,7 +85,7 @@ namespace LAB1
                     Console.WriteLine(" 2. Main Menu");
 
                     string Choice1 = Console.ReadLine();
-
+                    
                     switch (Choice1)
                     {
                         case "1":
@@ -93,11 +105,19 @@ namespace LAB1
                     Console.Clear();
                     Console.WriteLine("enter grade from 1 to 100");
                     Console.WriteLine("No more than two decimal points");
-                    double grade = Convert.ToDouble(Console.ReadLine());
-
+                    var  userInput = Console.ReadLine();
+                    double grade = 0;
+                    if (double.TryParse(userInput, out grade))
+                    {
+                   // double grade = Convert.ToDouble(userInput);
                     classGrades.Add(grade);
                     AddGradeMenu();
 
+                    }
+                    else
+                    {
+                        Menu();
+                    }
 
                 }
                 void ShowGrade()
@@ -135,19 +155,28 @@ namespace LAB1
 
                     {
                         Console.Clear();
-
+                        Console.WriteLine("Select Grade for Removal");
+                    
                         for (int i = 0; i < classGrades.Count; i++)
                         {
                             string Student = i.ToString();
                             Console.WriteLine(Student + ". " + classGrades[i]);
                         }
-                        Console.WriteLine("Select Grade for Removal");
-                        int choice5 = Convert.ToInt32(Console.ReadLine());
 
+                    var userInput = Console.ReadLine();
+                    int choice5 = 0; 
+                    if (Int32.TryParse(userInput, out choice5))
+                    {
                     classGrades.RemoveAt(choice5);
+                    ShowGrade();
+
+                    }
+                    else
+                    {
+                        Menu(); 
+                    }
                     
 
-                    ShowGrade();
                 }
                 
                  void ShowAverageGrade()
@@ -183,45 +212,60 @@ namespace LAB1
                     Console.Clear();
                     if (classGrades.Count > 0)
                     {
-                        double max = double.MaxValue;
-                        foreach (double classGrades in classGrades)
+                        double max = 0;
+                        for (int i = 0; i < classGrades.Count; i++)
                         {
-                            if (classGrades > max)
+                            if (classGrades[i] > max)
                             {
-                                max = classGrades;
+                                max = classGrades[i];
                             }
                         }
+
                         Console.WriteLine($"Best Grade: {max}");
+                        Console.WriteLine("Press Enter to Continue");
+                        Console.ReadLine();
 
                         Menu();
                     }
-                     
-                }
-
-                void ShowWorstGrade()
-                {
-                    Console.Clear();
-
-                    if (classGrades.Count > 0)  
+                    else
                     {
-                        double min = double.MaxValue;
-                        foreach (double classGrades in classGrades)
-                        {
-                            min = Math.Min(classGrades ,min );
- 
-                        }
-                        Console.WriteLine($"Worst Grade: {min}");
+
+                        Console.WriteLine("No grades entered.");
+                        Console.WriteLine("Press Enter to Continue");
+                        Console.ReadLine();
 
                         Menu();
+
+
                     }
-                    
-
-
                 }
+
+                //void ShowWorstGrade()
+                //{
+                //    Console.Clear();
+
+                //    if (classGrades.Count > 0)
+                //    {
+                //        double min = double.MaxValue;
+                //        foreach (double classGrades in classGrades)
+                //        {
+                //            min = Math.Min(classGrades, min);
+
+                //        }
+                //        Console.WriteLine($"Worst Grade: {min}");
+                //Console.WriteLine("Press Enter to Continue");
+                //Console.ReadLine();
+
+                //        Menu();
+                //    }
 
 
 
             }
+
+
+
+            
         }
     }
 }
