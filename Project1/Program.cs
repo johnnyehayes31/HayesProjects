@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 
 namespace LAB1
-{ 
+{
     internal class GradingSystemProgram
     {
 
         public static void Main(string[] args)
         {
             List<double> classGrades = new List<double>();
+            //bool shouldContinue = false;
 
             Menu();
 
@@ -29,9 +30,9 @@ namespace LAB1
                 string Choice = Console.ReadLine();
 
                 if (Choice == "1" || Choice == "2" || Choice == "3" || Choice == "4" || Choice == "5" || Choice == "6" || Choice == "7" || Choice == "8")
-                { 
+                {
 
-                
+
                     switch (Choice)
                     {
                         case "1":
@@ -59,17 +60,18 @@ namespace LAB1
                             break;
 
                         case "7":
-                            //ShowWorstGrade();
+                            ShowWorstGrade();
                             break;
 
                         case "8":
-                            //
+                           Environment.Exit(8);
                             break;
+
 
                         default:
                             break;
                     }
-                    
+
                 }
                 else
                 {
@@ -85,7 +87,7 @@ namespace LAB1
                     Console.WriteLine(" 2. Main Menu");
 
                     string Choice1 = Console.ReadLine();
-                    
+
                     switch (Choice1)
                     {
                         case "1":
@@ -105,13 +107,13 @@ namespace LAB1
                     Console.Clear();
                     Console.WriteLine("enter grade from 1 to 100");
                     Console.WriteLine("No more than two decimal points");
-                    var  userInput = Console.ReadLine();
+                    var userInput = Console.ReadLine();
                     double grade = 0;
                     if (double.TryParse(userInput, out grade))
                     {
-                   // double grade = Convert.ToDouble(userInput);
-                    classGrades.Add(grade);
-                    AddGradeMenu();
+                        // double grade = Convert.ToDouble(userInput);
+                        classGrades.Add(grade);
+                        AddGradeMenu();
 
                     }
                     else
@@ -134,58 +136,58 @@ namespace LAB1
                 }
 
                 void ModifyGrade()
-                    {
+                {
                     Console.Clear();
 
-                for (int i = 0; i < classGrades.Count; i++)
-                {
+                    for (int i = 0; i < classGrades.Count; i++)
+                    {
                         string Student = i.ToString();
-                        Console.WriteLine(Student +". "+ classGrades[i]);
-                }
-                Console.WriteLine("Select Grade");
-                int choice4 = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine(Student + ". " + classGrades[i]);
+                    }
+                    Console.WriteLine("Select Grade");
+                    int choice4 = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("New Grade");
-                int Adjustedgrade = Convert.ToInt32(Console.ReadLine());
-                classGrades[choice4] = Adjustedgrade;
+                    int Adjustedgrade = Convert.ToInt32(Console.ReadLine());
+                    classGrades[choice4] = Adjustedgrade;
 
                     Menu();
                 }
 
                 void RemoveGrade()
 
+                {
+                    Console.Clear();
+                    Console.WriteLine("Select Grade for Removal");
+
+                    for (int i = 0; i < classGrades.Count; i++)
                     {
-                        Console.Clear();
-                        Console.WriteLine("Select Grade for Removal");
-                    
-                        for (int i = 0; i < classGrades.Count; i++)
-                        {
-                            string Student = i.ToString();
-                            Console.WriteLine(Student + ". " + classGrades[i]);
-                        }
+                        string Student = i.ToString();
+                        Console.WriteLine(Student + ". " + classGrades[i]);
+                    }
 
                     var userInput = Console.ReadLine();
-                    int choice5 = 0; 
+                    int choice5 = 0;
                     if (Int32.TryParse(userInput, out choice5))
                     {
-                    classGrades.RemoveAt(choice5);
-                    ShowGrade();
+                        classGrades.RemoveAt(choice5);
+                        ShowGrade();
 
                     }
                     else
                     {
-                        Menu(); 
+                        Menu();
                     }
-                    
+
 
                 }
-                
-                 void ShowAverageGrade()
+
+                void ShowAverageGrade()
                 {
                     double sum = 0;
-                    for (int i = 0;i < classGrades.Count; i++)
+                    for (int i = 0; i < classGrades.Count; i++)
                     {
-                        sum +=  classGrades[i];
-                        
+                        sum += classGrades[i];
+
                     }
                     sum /= classGrades.Count;
                     Console.WriteLine("Classroom Average");
@@ -200,7 +202,7 @@ namespace LAB1
                         Console.WriteLine("Please enter grades.");
 
                     }
-                        
+
                     Console.WriteLine(sum);
                     Console.ReadLine();
 
@@ -240,35 +242,43 @@ namespace LAB1
                     }
                 }
 
-                //void ShowWorstGrade()
-                //{
-                //    Console.Clear();
+                void ShowWorstGrade()
+                {
+                    Console.Clear();
 
-                //    if (classGrades.Count > 0)
-                //    {
-                //        double min = double.MaxValue;
-                //        foreach (double classGrades in classGrades)
-                //        {
-                //            min = Math.Min(classGrades, min);
+                    if (classGrades.Count > 0)
+                    {
+                        double min = 1000;
+                        for (int i = 0; i < classGrades.Count; i++)
+                        {
+                            if (classGrades[i] < min)
+                            {
+                                min = classGrades[i];
+                            }
+                        }
+                            Console.WriteLine($"Worst Grade: {min}");
+                            Console.WriteLine("Press Enter to Continue");
+                            Console.ReadLine();
+                            Menu();
 
-                //        }
-                //        Console.WriteLine($"Worst Grade: {min}");
-                //Console.WriteLine("Press Enter to Continue");
-                //Console.ReadLine();
+                    }
 
-                //        Menu();
-                //    }
+                    else
+                    {
+                        Console.WriteLine("No grades entered.");
+                        Console.WriteLine("Press Enter to Continue");
+                        Console.ReadLine();
+
+                        Menu();
+                    }
 
 
 
+                }
+                }
             }
-
-
-
-            
         }
     }
-}
 //c => c.Number == someTextBox.Text
 //var index = classGrades.FindIndex(c => choice4 == choice4.);
 //list[index] = new SomeClass(...);
