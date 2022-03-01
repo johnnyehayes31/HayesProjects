@@ -35,6 +35,7 @@ namespace Lab2Hayes2
                         AddClassroom();
                         {
                             break;
+                           
                         }
                     case "2":
                         ShowClassroom();
@@ -52,7 +53,7 @@ namespace Lab2Hayes2
                             break;
                         }
                     case "9":
-                        
+                        Environment.Exit(9);
                         {
                             break;
                         }
@@ -70,45 +71,87 @@ namespace Lab2Hayes2
             }
         }
 
-            public static void AddClassroom()
-            {
-                Console.Clear();
-                Console.WriteLine(@"Add Classroom");
+        public static void AddClassroom()
+        {
+            
 
-                string userInput = Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine(@"Add Classroom");
+            string userInput = Console.ReadLine();
+            if(userInput != null)
+            {
                 classRoomDictionary.Add(userInput, new Classroom(userInput));
-                Menu();
+                Console.WriteLine(@"Press Enter to save added classroom");
+                
+            Menu();
             }
+            else
+            {
+                HailMary();
+            }
+
+
+        }                
+
 
         public static void ShowClassroom()
         {
             Console.Clear();
-            Console.WriteLine(@"Display Classroom");
+            if (classRoomDictionary.Count > 0)
+            {
+
+            Console.WriteLine(@"Display Classrooms");
             foreach (KeyValuePair<string, Classroom> kvp in classRoomDictionary)
             {
                 Console.WriteLine($"Classroom Name:" + kvp.Value.name);
 
             }
+                Console.WriteLine(@"Press Enter to go back to Menu");
             Console.ReadLine();
-
             Menu();
+            }
+            else
+            {
+                Console.WriteLine(@"No Classrooms at this time.
+                        Please add classroom");
+                Console.ReadLine();
+                Menu();
+            }
+
         }
 
         public static void RemoveClassroom()
         {
             Console.Clear();
+            if(classRoomDictionary.Count > 0)
+            {
             Console.WriteLine("Please Enter a Classroom");
-
             foreach (KeyValuePair<string, Classroom> kvp in classRoomDictionary)
             {
                 Console.WriteLine($"Classroom Name:" + kvp.Value.name);
 
             }
+            
             string userInput = Console.ReadLine();
-            classRoomDictionary.Remove(userInput);
-            Console.WriteLine("Please Press Enter NOW");
-            Console.ReadLine();
-            Menu();
+                if( userInput != null && classRoomDictionary.ContainsKey(userInput))
+                {
+                    classRoomDictionary.Remove(userInput);
+                    Console.WriteLine("Please Press Enter NOW");
+                    Console.ReadLine();
+                    Menu();
+                    
+                }
+                else
+                {
+                    HailMary();
+                }
+            }
+            else
+            {
+                EmptyClassroomDictionary();
+
+            }
+            
 
 
         }
@@ -116,18 +159,47 @@ namespace Lab2Hayes2
         public static void ClassRoomDetailsSubMenu()
         {
             Console.Clear();
-            foreach (KeyValuePair<string, Classroom> kvp in classRoomDictionary)
+            if(classRoomDictionary != null)
             {
-                Console.WriteLine($"Classroom Name:" + kvp.Value.name);
+                foreach (KeyValuePair<string, Classroom> kvp in classRoomDictionary)
+                {
+                    Console.WriteLine($"Classroom Name:" + kvp.Value.name);
+
+                }
+                Console.WriteLine("Enter Class name here");
+                string userInput = Console.ReadLine().ToUpper();
+
+                if(userInput != null && classRoomDictionary.ContainsKey(userInput))
+                {
+                    Classroom.ClassroomDetailsMenu(userInput);
+                    
+                }
+                else
+                {
+                    HailMary();
+                }
 
             }
-            Console.WriteLine("Enter Class name here");
-            //Console.WriteLine(" 0. Return to Last Menu");
+            else
+            {
+                EmptyClassroomDictionary();
+            }
 
-            string userInput = Console.ReadLine().ToUpper();
-            
-           Classroom.ClassroomDetailsMenu(userInput);
         }
+
+     public static void HailMary()
+        {
+            Console.WriteLine(@"UserInput failed Press Enter");
+            Console.ReadLine();
+            Menu();
+
+        }
+        public static void EmptyClassroomDictionary()
+        {
+             Menu();
+
+        }
+
 
 
     }

@@ -8,12 +8,20 @@ namespace Lab2Hayes2
 {
     public class Assignment
     {
-        public static Dictionary<string, Classroom> Grades = new Dictionary<string, Classroom>();
 
 
         public string name { get; set; }
 
-// Dictionary add of grades
 
+        public double Grade { get; set; } = 0;
+        public bool IsComplete { get; set; } = false;
+
+        public Assignment(string assignmentName)
+        {
+            name = assignmentName.ToUpper(); // constructor example
+        }
     }
+        
+         
+       
 }
